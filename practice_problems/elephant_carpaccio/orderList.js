@@ -16,23 +16,25 @@ let stateTaxRate = {
 }
 
 class Order {
-    constructor(itemLabel, price, quantity, state) {
-        this.itemLabel = itemLabel,
-        this.price = price,
-        this.quantity = quantity,
+    constructor(products, state) {
+        this.products = products,
         this.state = state
     }
 
     getTotalWithoutTaxes() {
-        return this.price * this.quantity;
+        let total = 0;
+        for (let i = 0; i < this.products.length; i++) {
+            total += this.products[i].getTotalWithoutTaxes();
+        }
+        return total;
     }
 
     getDiscountRate() {
-        let currentQuantity = this.quantity;
+        let currentQuantity = this.getTotalWithoutTaxes();
         let rate = 0;
         let quantityIndicators = Object.keys(discountRate);
         for (let i = 0; i < quantityIndicators.length; i++) {
-            if (currentQuantity > Number(quantityIndicators[i])) {
+            if (currentQuantity >= Number(quantityIndicators[i])) {
                 rate = discountRate[quantityIndicators[i]];
             }
         }
