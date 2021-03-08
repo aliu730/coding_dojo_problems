@@ -16,15 +16,24 @@ let stateTaxRate = {
 }
 
 class Order {
-    constructor(products, state) {
-        this.products = products,
+    constructor(state) {
+        this.items = [],
         this.state = state
+    }
+
+    addEntry(orderEntry) {
+        this.items.push(orderEntry);
+    }
+
+    calculateRawTotal(price, quantity) {
+        return price * quantity;
     }
 
     getTotalWithoutTaxes() {
         let total = 0;
-        for (let i = 0; i < this.products.length; i++) {
-            total += this.products[i].getTotalWithoutTaxes();
+        for (let i = 0; i < this.items.length; i++) {
+            const { product, quantity } = this.items[i];
+            total += this.calculateRawTotal(product.price, quantity);
         }
         return total;
     }

@@ -1,13 +1,8 @@
 class Product {
-    constructor(label, price, quantity) {
+    constructor(label, price) {
         this.label = label,
-        this.price = price,
-        this.quantity = quantity
+        this.price = price
     }
-
-    getTotalWithoutTaxes() {
-        return this.price * this.quantity;
-    } 
 }
 
 module.exports = {
